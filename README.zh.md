@@ -21,7 +21,6 @@ cd okr-tracker-skill
 # 建立符号链接
 ln -s $(pwd)/okr-setup ~/.claude/skills/okr-setup
 ln -s $(pwd)/okr-review ~/.claude/skills/okr-review
-ln -s $(pwd)/shared ~/.claude/skills/okr-tracker-shared
 ```
 
 或在你的 `~/.claude/CLAUDE.md` 中添加引用：
@@ -69,6 +68,10 @@ ln -s $(pwd)/shared ~/.claude/skills/okr-tracker-shared
 |------|------|
 | `config.json` | 用户配置（姓名、飞书文档 URL、时区等） |
 | `<year>-Q<n>.json` | 季度 OKR 目标与进度数据 |
+
+`config.json` 新增字段：
+- `doc_mode`：`"parent"`（一周一份子页面，doc_url 填父级 wiki）或 `"single"`（单文档持续追加）
+- `doc_url_history`：自动记录最近 5 次手动指定的文档 URL
 
 参考 [examples/sample-okr.json](examples/sample-okr.json) 查看数据格式示例。
 

@@ -21,7 +21,6 @@ cd okr-tracker-skill
 # Create symlinks
 ln -s $(pwd)/okr-setup ~/.claude/skills/okr-setup
 ln -s $(pwd)/okr-review ~/.claude/skills/okr-review
-ln -s $(pwd)/shared ~/.claude/skills/okr-tracker-shared
 ```
 
 Or reference from your `~/.claude/CLAUDE.md`:
@@ -67,6 +66,10 @@ All data stored in `~/.claude/okr/`:
 |------|---------|
 | `config.json` | User config (name, Feishu doc URL, timezone, etc.) |
 | `<year>-Q<n>.json` | Quarterly OKR objectives and progress data |
+
+New fields in `config.json`:
+- `doc_mode`: `"parent"` (one child page per week, doc_url points to parent wiki) or `"single"` (continuous append to single document)
+- `doc_url_history`: Automatically tracks the last 5 manually specified document URLs
 
 See [examples/sample-okr.json](examples/sample-okr.json) for the data format.
 
