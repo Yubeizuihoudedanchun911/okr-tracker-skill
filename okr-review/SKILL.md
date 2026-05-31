@@ -104,10 +104,9 @@ lark-cli docs +fetch --api-version v2 --doc "<doc_url>"
 
 ```bash
 mkdir -p /tmp/okr-review-imgs
-cd /tmp/okr-review-imgs
-# 对每个 token 并行执行（N 为序号，从 1 开始）：
-lark-cli docs +media-download --token <token_1> --output img_1.png --overwrite &
-lark-cli docs +media-download --token <token_2> --output img_2.png --overwrite &
+# cd 与 lark-cli 必须在同一 Bash 调用中，否则 cwd 会丢失
+cd /tmp/okr-review-imgs && lark-cli docs +media-download --token <token_1> --output img_1.png --overwrite &
+cd /tmp/okr-review-imgs && lark-cli docs +media-download --token <token_2> --output img_2.png --overwrite &
 # ... 以此类推
 wait
 ```
