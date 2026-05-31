@@ -1,0 +1,56 @@
+{
+  "year": 2025,
+  "quarter": 2,
+  "created_at": "2025-04-01",
+  "objectives": [
+    {
+      "id": "O1",
+      "title": "提升系统稳定性",
+      "description": "本季度重点关注线上服务质量，减少故障频次，提升整体可用性指标，为 Q3 的大促做好基础保障",
+      "weight": 0.4,
+      "key_results": [
+        {
+          "id": "KR1",
+          "title": "P0 故障数降至 0",
+          "description": "包括所有影响核心链路的 P0 级别故障，不含计划内维护窗口期的短暂中断",
+          "metric": { "target": 0, "unit": "次", "direction": "decrease" },
+          "current": 1,
+          "status": "at_risk"
+        },
+        {
+          "id": "KR2",
+          "title": "服务可用性达到 99.95%",
+          "description": "按月度计算的整体服务可用性，包含所有核心服务的加权平均",
+          "metric": { "target": 99.95, "unit": "%", "direction": "increase" },
+          "current": 99.92,
+          "status": "on_track"
+        }
+      ]
+    },
+    {
+      "id": "O2",
+      "title": "提升团队研发效能",
+      "description": "通过工具链优化和流程改进，缩短需求交付周期，提升代码质量",
+      "weight": 0.6,
+      "key_results": [
+        {
+          "id": "KR3",
+          "title": "需求平均交付周期缩短至 5 天",
+          "description": "从需求评审通过到上线的平均天数，不含等待排期时间",
+          "metric": { "target": 5, "unit": "天", "direction": "decrease" },
+          "current": 7,
+          "status": "at_risk"
+        },
+        {
+          "id": "KR4",
+          "title": "单测覆盖率提升至 80%",
+          "description": "核心模块的单元测试行覆盖率",
+          "metric": { "target": 80, "unit": "%", "direction": "increase" },
+          "current": 65,
+          "status": "behind"
+        }
+      ]
+    }
+  ],
+  "raw_input": "O1: 提升系统稳定性 (40%)\n本季度重点关注线上服务质量，减少故障频次，提升整体可用性指标，为Q3的大促做好基础保障。\n- KR1: P0故障数降至0（包括所有影响核心链路的P0级别故障，不含计划内维护窗口期的短暂中断）\n- KR2: 服务可用性达到99.95%（按月度计算的整体服务可用性，包含所有核心服务的加权平均）\n\nO2: 提升团队研发效能 (60%)\n通过工具链优化和流程改进，缩短需求交付周期，提升代码质量。\n- KR3: 需求平均交付周期缩短至5天（从需求评审通过到上线的平均天数，不含等待排期时间）\n- KR4: 单测覆盖率提升至80%（核心模块的单元测试行覆盖率）"
+}
