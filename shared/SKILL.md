@@ -6,6 +6,74 @@ description: "OKR Tracker 共享规则：数据格式定义、存储路径约定
 
 # OKR Tracker 共享规则
 
+## lark-cli 鉴权
+
+每次执行 okr-setup 或 okr-review 前，**必须先完成以下鉴权检查**。
+
+### Step 0: 检查 lark-cli 是否已安装
+
+```bash
+lark-cli --version
+```
+
+如果命令不存在，提示用户安装 lark-cli 后重试。
+
+### Step 1: 检查是否已完成初始配置
+
+```bash
+lark-cli config list
+```
+
+如果输出为空或报错，说明未完成初始配置，执行：
+
+```bash
+# 该命令会阻塞，等待用户在浏览器中完成配置
+lark-cli config init --new
+```
+
+命令输出中会包含 `verification_url`，使用以下命令将其转为二维码展示给用户：
+
+```bash
+lark-cli auth qrcode "<verification_url>"
+```
+
+等待用户扫码并完成配置后继续。
+
+### Step 2: 检查并完成 scope 授权
+
+根据当前执行的 skill 确定所需 scope：
+
+| Skill | 所需 scope |
+|-------|-----------|
+| okr-setup（方式 A，粘贴文本） | 无需额外 scope |
+| okr-setup（方式 B，从飞书拉取） | `okr:okr.period:readonly okr:okr.content:readonly` |
+| okr-review | `docx:document:readonly` |
+
+发起授权（立即返回，不阻塞）：
+
+```bash
+lark-cli auth login --scope "<所需 scope>" --no-wait --json
+```
+
+从输出中提取 `verification_url`，生成二维码：
+
+```bash
+lark-cli auth qrcode "<verification_url>"
+```
+
+将二维码展示给用户，并提示："请用飞书 App 扫码完成授权，完成后告诉我。"
+
+**交还控制权，等待用户回复已完成授权。**
+
+用户确认授权完成后，继续后续步骤。
+
+### 权限不足时的处理
+
+如果执行 lark-cli 命令时遇到权限错误（响应中包含 `permission_violations`）：
+
+1. 从错误响应中提取缺失的 scope
+2. 重新执行 Step 2，使用缺失的 scope 发起授权
+
 ## 数据存储路径
 
 所有数据存放在 `~/.claude/okr/` 目录下：

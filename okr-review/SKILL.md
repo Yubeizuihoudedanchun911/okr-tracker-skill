@@ -13,8 +13,11 @@ metadata:
 
 ## 前置条件
 
-- `lark-cli` 已安装并完成 `config init`
-- 已授权：`lark-cli auth login --scope "docx:document:readonly"`
+**CRITICAL — 执行任何 lark-cli 命令前，必须先按 shared/SKILL.md 中的「lark-cli 鉴权」章节完成鉴权检查（Step 0 → Step 1 → Step 2）。**
+
+所需 scope：`docx:document:readonly`
+
+其他前置：
 - 已运行过 `/okr-setup` 创建本季度 OKR 目标
 - `~/.claude/okr/config.json` 已配置
 

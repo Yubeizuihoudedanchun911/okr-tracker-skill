@@ -13,8 +13,11 @@ metadata:
 
 ## 前置条件
 
-- `lark-cli` 已安装并完成 `config init`
-- 如需从飞书 OKR 拉取：`lark-cli auth login --scope "okr:okr.content:readonly okr:okr.period:readonly"`
+**CRITICAL — 执行任何 lark-cli 命令前，必须先按 shared/SKILL.md 中的「lark-cli 鉴权」章节完成鉴权检查（Step 0 → Step 1 → Step 2）。**
+
+所需 scope（按录入方式）：
+- 方式 A（粘贴文本）：无需额外 scope
+- 方式 B（从飞书拉取）：`okr:okr.period:readonly okr:okr.content:readonly`
 
 ## 工作流
 
