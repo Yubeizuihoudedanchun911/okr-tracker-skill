@@ -10,6 +10,8 @@ internal: true
 
 ## 触发规则速查
 
+速查表供快速定位：AI agent 应按 Step 0→1→2→3→4 顺序执行，各 Step 内部包含自己的触发条件判断，不需要提前跳过步骤。
+
 | 条件 | 触发步骤 |
 |------|---------|
 | lark-cli 未安装 | Step 0（终止，等用户安装后重新调用） |
@@ -37,17 +39,18 @@ lark-cli --version
 ## Step 1: 检查 lark-cli config
 
 ```bash
-lark-cli config show
+lark-cli config show 2>&1; echo "EXIT:$?"
 ```
 
-- **成功**（输出 appId 等配置）→ 继续 Step 2
-- **失败**（输出 "not configured"）→ 执行初始化：
+- **成功**（exit code 为 0 且输出 appId 等配置）→ 继续 Step 2
+- **失败**（exit code 非 0 或输出包含 "not configured" / "error"）→ 后台启动初始化并捕获输出：
 
   ```bash
-  lark-cli config init --new
+  lark-cli config init --new 2>&1 &
+  sleep 3
   ```
 
-  此命令会阻塞并输出 `verification_url`。从输出中提取 URL，生成二维码展示：
+  从输出中提取 `verification_url`（格式：`https://open.feishu.cn/page/cli?user_code=...`），生成二维码展示：
 
   ```bash
   lark-cli auth qrcode "<verification_url>" --ascii
@@ -84,6 +87,8 @@ lark-cli auth qrcode "<verification_url>" --ascii
 ```bash
 lark-cli auth login --device-code "<device_code>"
 ```
+
+如果 `--device-code` 命令报错（过期或失败），重新从 Step 2 开始（重新生成新的 device_code）。
 
 → 继续 Step 3。
 
@@ -137,4 +142,5 @@ lark-cli auth check --scope "docx:document:readonly docs:document.media:download
   lark-cli auth login --scope "<缺失的 scope>" --no-wait --json
   ```
 
-  生成二维码 → 等待用户扫码确认 → 使用 device_code 完成授权 → 重新执行 Step 4 验证。
+  生成二维码 → 等待用户扫码确认 → 使用 device_code 完成授权 → 重新执行 Step 4 验证。若连续 2 次补授权后仍有缺失 scope，停止重试，提示用户：
+  「scope 授权验证失败，请检查飞书应用权限配置，或运行 `lark-cli auth status` 查看当前状态。」
